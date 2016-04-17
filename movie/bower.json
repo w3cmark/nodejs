@@ -1,0 +1,26 @@
+{
+  "name": "movie",
+  "homepage": "https://github.com/w3cmark/nodejs",
+  "authors": [
+    "grp.wzj@corp.netease.com <grp.wzj@corp.netease.com>"
+  ],
+  "description": "node movie website",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "movie"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
