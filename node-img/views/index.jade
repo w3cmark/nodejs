@@ -1,0 +1,37 @@
+doctype
+html
+	head
+		meta(charset='utf-8')
+		title #{title}
+		link(href="/css/index.css" rel="stylesheet")
+	body
+		.main
+			h1 基于node.js的图片批量裁剪工具
+			h3 裁剪配置
+			.container
+				.row
+					.form-horizontal(id="Jcropform")
+						.form-group
+							label.col-sm-2.control-label(for="inputInputdir") 裁剪前所在文件夹名（默认为项目下的img）: 
+							input#inputInputdir.form-control(type="text", name="config[inputdir]")
+						.form-group
+							label.col-sm-2.control-label(for="inputOutputdir") 裁剪后存放文件夹名（默认为项目下的output）: 
+							input#inputOutputdir.form-control(type="text", name="config[outputdir]")
+						.form-group
+							label.col-sm-2.control-label(for="inputstartpoint") 裁剪起点坐标（默认为: 0,0）: 
+							input#inputstartpoint.form-control(type="text", name="config[startpoint]", placeholder="x,y")
+						.form-group
+							label.col-sm-2.control-label(for="inputsize") *裁剪后的尺寸： 
+							input#inputsize.form-control(type="text", name="config[size]", placeholder="width,height")
+						.form-group
+							label.col-sm-2.control-label(for="inputspace") 逐帧系列图坐标递增值： 
+							input#inputspace.form-control(type="text", name="config[space]", placeholder="x,y")
+						.form-group
+							a.btn(href="javascript:;" id="Jbtn") 裁 剪
+
+			h3 裁剪结果
+			.container
+				.row#Jresult
+
+		script(src="/js/lib/jquery.min.js")
+		script(src="/js/index.js")
