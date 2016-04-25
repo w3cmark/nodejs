@@ -18,6 +18,9 @@ html
 							label.col-sm-2.control-label(for="inputOutputdir") 裁剪后存放文件夹名（默认为项目下的output）: 
 							input#inputOutputdir.form-control(type="text", name="config[outputdir]")
 						.form-group
+							label.col-sm-2.control-label(for="inputformat") 裁剪后图片格式后缀（默认不改变格式）: 
+							input#inputformat.form-control(type="text", name="config[format]", placeholder="png/jpg/gif/webp")
+						.form-group
 							label.col-sm-2.control-label(for="inputstartpoint") 裁剪起点坐标（默认为: 0,0）: 
 							input#inputstartpoint.form-control(type="text", name="config[startpoint]", placeholder="x,y")
 						.form-group

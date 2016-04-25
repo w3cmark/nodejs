@@ -23,6 +23,7 @@ app.get('/', function(req, res){
 		config: {
 			inputdir: ' ',
 			outputdir: ' ',
+			format: '',
 			size: ' ',
 			startpoint: ' ',
 			space: ' '
@@ -36,18 +37,19 @@ app.get('/crop', function(req, res){
 	var config = req.query,
 		inputPath = config.inputdir ? config.inputdir : 'img',
 		outputPath = config.outputdir ? config.outputdir : 'output',
+		format = config.format ? config.format : ' ',
 		size = config.size,
 		startpoint = config.startpoint ? config.startpoint : '0, 0',
 		space = config.space ? config.space : '0, 0';
 	
-	readFiles(inputPath, outputPath, size, startpoint, space, function(data){
+	readFiles(inputPath, outputPath, format, size, startpoint, space, function(data){
 		res.send(config.callback+'('+ JSON.stringify(data) +')');
 	});
 	// res.send(config.callback+'({success: 1})');
 })
 
 // 遍历所有图片
-function readFiles(inputPath, outputPath, size, startpoint, space, callback){
+function readFiles(inputPath, outputPath, format, size, startpoint, space, callback){
 	fs.readdir(inputPath, function(err, files){
 		if(!err){
 			var total = 0,
@@ -57,7 +59,10 @@ function readFiles(inputPath, outputPath, size, startpoint, space, callback){
 				var inputfile = inputPath + '/' + files[i],
 					outputfile = outputPath + '/' + files[i],
 					mess = '';
-				console.log(inputfile);
+				console.log('format:'+format)
+				if(format){
+					outputfile = outputfile.replace(path.extname(files[i]), '.'+format);
+				}
 				if (!fs.existsSync(outputPath)) {
 		            fs.mkdirSync(outputPath);
 		            console.log(outputPath + '目录创建成功');
@@ -91,9 +96,9 @@ function gmCrop(inputfile, outputfile, size, startpoint, space, cur, callback){
 		h = dismantle(size)[1],
 		x_space = dismantle(space)[0],
 		y_space = dismantle(space)[1],
-		x = dismantle(startpoint)[0] + cur*x_space,
-		y = dismantle(startpoint)[1] + cur*y_space;
-
+		x = dismantle(startpoint)[0]*1 + cur*x_space*1,
+		y = dismantle(startpoint)[1]*1 + cur*y_space*1;
+	// console.log("x:"+x +'|| y:'+y)
 	gm(inputfile)
 	.crop(w, h, x , y)
 	.noProfile()

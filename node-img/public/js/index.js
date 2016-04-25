@@ -3,6 +3,7 @@ $('#Jbtn').bind('click', function(){
 	var $cropform = $('#Jcropform'),
 		inputdir = $cropform.find('input[name="config[inputdir]"]').val(),
 		outputdir = $cropform.find('input[name="config[outputdir]"]').val(),
+		format = $cropform.find('input[name="config[format]"]').val(),
 		size = $cropform.find('input[name="config[size]"]').val(),
 		startpoint = $cropform.find('input[name="config[startpoint]"]').val(),
 		space = $cropform.find('input[name="config[space]"]').val();
@@ -33,6 +34,7 @@ $('#Jbtn').bind('click', function(){
 		data: {
 			'inputdir': inputdir,
 			'outputdir': outputdir,
+			'format': format,
 			'size': size,
 			'startpoint': startpoint,
 			'space': space
