@@ -37,7 +37,7 @@ app.get('/crop', function(req, res){
 	var config = req.query,
 		inputPath = config.inputdir ? config.inputdir : 'img',
 		outputPath = config.outputdir ? config.outputdir : 'output',
-		format = config.format ? config.format : ' ',
+		format = config.format ? config.format : '',
 		size = config.size,
 		startpoint = config.startpoint ? config.startpoint : '0, 0',
 		space = config.space ? config.space : '0, 0';
