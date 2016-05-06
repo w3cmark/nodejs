@@ -59,7 +59,7 @@ function readFiles(inputPath, outputPath, format, size, startpoint, space, callb
 				var inputfile = inputPath + '/' + files[i],
 					outputfile = outputPath + '/' + files[i],
 					mess = '';
-				console.log('format:'+format)
+				// console.log('format:'+format)
 				if(format){
 					outputfile = outputfile.replace(path.extname(files[i]), '.'+format);
 				}
