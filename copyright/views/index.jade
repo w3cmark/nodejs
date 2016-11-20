@@ -1,0 +1,69 @@
+doctype
+html
+	head
+		meta(charset='utf-8')
+		title #{title}
+		link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/css/index.css" rel="stylesheet")
+	body
+		.main
+			h1 版权管理
+			h3 全局配置
+			.container
+				.row
+					.form-horizontal(id="Jcropform")
+						.form-group
+							label.col-sm-2.control-label(for="logo") Logo: 
+							.col-sm-10
+								input#logo.form-control(type="text", name="config[logo]")
+						.form-group
+							label.col-sm-2.control-label(for="nav") 导航: 
+							.col-sm-10
+								input#nav.form-control(type="text", name="config[nav]")
+						.form-group
+							label.col-sm-2.control-label(for="company") 公司: 
+							.col-sm-10
+								input#company.form-control(type="text", name="config[company]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="reportCenter") 举报中心: 
+							.col-sm-10
+								input#reportCenter.form-control(type="text", name="config[reportCenter]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="guardianship") 家长监护： 
+							.col-sm-10
+								input#guardianship.form-control(type="text", name="config[guardianship]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="tempCopyrightHtml") tempCopyrightHtml： 
+							.col-sm-10
+								input#tempCopyrightHtml.form-control(type="text", name="config[tempCopyrightHtml]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="agePermision") 适合年龄： 
+							.col-sm-10
+								input#agePermision.form-control(type="text", name="config[agePermision]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="suggestion") 建议： 
+							.col-sm-10
+								input#suggestion.form-control(type="text", name="config[suggestion]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="reportInfoHtml") reportInfoHtml： 
+							.col-sm-10
+								input#reportInfoHtml.form-control(type="text", name="config[reportInfoHtml]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="record") 备案： 
+							.col-sm-10
+								input#record.form-control(type="text", name="config[record]", placeholder="")
+						.form-group
+							label.col-sm-2.control-label(for="otherHtml") 其它： 
+							.col-sm-10
+								input#otherHtml.form-control(type="text", name="config[otherHtml]", placeholder="")
+						.form-group
+							input.btn.btn-primary.btn-lg.center-block(type="submit" value="添加")
+
+			h3 局部配置
+			.container
+				.row#Jresult
+
+		
+		script(src="/libs/jquery/dist/jquery.min.js")
+		script(src="/libs/bootstrap/dist/js/bootstrap.min.js")
+		script(src="/js/index.js")

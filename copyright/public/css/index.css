@@ -1,0 +1,68 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+}
+body{
+	font-family: "Microsoft Yahei";
+	font-size: 14px;
+}
+.main{
+	width: 1200px;
+	margin: 0 auto;
+	min-height: 700px;
+}
+h1{
+	color: #0099CC;
+	text-align: center;
+	padding: 15px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #eee;
+}
+h3{
+	height: 40px;
+	line-height: 40px;
+	background: #fafafa;
+	margin-bottom: 15px;
+	color: #888;
+	padding: 0 15px;
+}
+/*.form-group{
+	min-height: 50px;
+	line-height: 50px;
+}
+.form-group label{
+	width: 350px;
+	margin-right: 15px;
+	text-align: right;
+	display: inline-block;
+	vertical-align: middle;
+}
+.form-group input{
+	padding: 8px 10px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	width: 700px;
+}
+.form-group .btn{
+	width: 50%;
+	color: #fff;
+	border-radius: 10px;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+	margin: 15px auto 30px;
+	background: #f60;
+	text-align: center;
+}
+.form-group .btn:hover{
+	text-decoration: none;
+	background: #f80;
+}
+#Jresult p{
+	line-height: 30px;
+	color: #555;
+}*/

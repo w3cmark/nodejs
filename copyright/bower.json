@@ -1,0 +1,23 @@
+{
+  "name": "copyright",
+  "homepage": "https://github.com/w3cmark/nodejs",
+  "authors": [
+    "lijun01@corp.netease.com <lijun01@corp.netease.com>"
+  ],
+  "description": "copyright",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
