@@ -1,14 +1,27 @@
 var fs = require('fs'),
 	express = require('express'),
 	bodyParser = require('body-parser'),
+	mongoose = require('mongoose'),
+	_ = require('underscore'),
 	path =  require('path'),
+	Copyright = require('./models/copyright'),
 	app = express(),
 	port = process.env.POTR || 3000;
  
+ // 数据库连接
+var db = mongoose.connect('mongodb://127.0.0.1/data')
+db.connection.on('error', function (error) { 
+	console.log('数据库连接失败：' + error); 
+});
+db.connection.on('open', function () { 
+	console.log('——数据库连接成功！——'); 
+});
+
  app.set('views', './views')
  app.set('view engine', 'jade')
  app.use(bodyParser.urlencoded({extended: false}))
  app.use(express.static(path.join(__dirname, 'public')))
+ app.locals.moment = require('moment')
  app.listen(port)
 
  console.log('start on port '+ port)
@@ -18,8 +31,32 @@ var fs = require('fs'),
 app.get('/', function(req, res){
 
 	res.render('index',{
-		title: '首页',
-		config: {
+		title: '中文版权管理',
+		globalConfig: {
+			domainName: ' '
+		}
+	})
+	
+})
+
+// addglobalcofig page
+app.get('/global/add', function(req, res){
+
+	res.render('globalcofig',{
+		title: '添加全局配置',
+		globaleConfig: {
+			domainName: ' '
+		}
+	})
+	
+})
+
+// eidtglobalcofig page
+app.get('/global/eidt', function(req, res){
+
+	res.render('globalcofig',{
+		title: '修改全局配置',
+		globaleConfig: {
 			domainName: ' '
 		}
 	})
