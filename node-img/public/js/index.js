@@ -56,7 +56,7 @@ function checkInput(val){
 	if(val && val.indexOf('，') == -1){
 		if(val.indexOf(',') > -1){
 			var vals = val.split(',');
-			if(vals.length != 2 || !parseInt(vals[0]) || !parseInt(vals[1])) {
+			if(vals.length != 2 || (vals[0]!= 0 && !parseInt(vals[0])) || (vals[1]!= 0 && !parseInt(vals[1]))) {
 				return false;
 			}
 		}else if(!parseInt(val)){
