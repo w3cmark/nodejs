@@ -8,8 +8,9 @@ var fs = require('fs'),
 	app = express(),
 	port = process.env.POTR || 3000;
  
- // 数据库连接
-var db = mongoose.connect('mongodb://127.0.0.1/data')
+// 数据库连接
+mongoose.Promise = require('bluebird');
+var db = mongoose.connect('mongodb://127.0.0.1/copyright')
 db.connection.on('error', function (error) { 
 	console.log('数据库连接失败：' + error); 
 });
@@ -19,22 +20,27 @@ db.connection.on('open', function () {
 
  app.set('views', './views')
  app.set('view engine', 'jade')
- app.use(bodyParser.urlencoded({extended: false}))
+ app.use(bodyParser.urlencoded({extended: true}))
  app.use(express.static(path.join(__dirname, 'public')))
  app.locals.moment = require('moment')
  app.listen(port)
 
  console.log('start on port '+ port)
 
-
 // index page
 app.get('/', function(req, res){
-
-	res.render('index',{
-		title: '中文版权管理',
-		globalConfig: {
-			domainName: ' '
+	Copyright.fetch(function(err, configs){
+		if(err){
+			console.log(err)
 		}
+		// console.log(configs)
+		if(configs){
+			res.render('index',{
+				title: '中文版权管理',
+				configs: configs
+			})
+		}
+		
 	})
 	
 })
@@ -43,27 +49,141 @@ app.get('/', function(req, res){
 app.get('/global/add', function(req, res){
 
 	res.render('globalcofig',{
-		title: '添加全局配置',
 		globaleConfig: {
-			domainName: ' '
+			domainName: 'global',
+			logo: {
+				href: '',
+				blackSrc: '',
+				whiteSrc: ''
+			},
+			nav: {
+				txt: '',
+				href: ''
+			},
+			company: '',
+			reportCenter: {
+				txt: '',
+				href: ''
+			},
+			guardianship: {
+				txt: '',
+				href: ''
+			},
+			tempCopyrightHtml: '',
+			agePermision: '',
+			suggestion: '',
+			reportInfoHtml: '',
+			record: {
+				txt: '',
+				href: ''
+			},
+			otherHtml: ''
 		}
 	})
 	
 })
 
 // eidtglobalcofig page
-app.get('/global/eidt', function(req, res){
+app.get('/global/eidt/:id', function(req, res){
+	var id = req.params.id
+	if(id){
+		Copyright.findById(id, function(err, config){
+			if(err){
+				console.log(err)
+			}
 
-	res.render('globalcofig',{
-		title: '修改全局配置',
-		globaleConfig: {
-			domainName: ' '
-		}
-	})
+			if(config){
+				res.render('globalcofig',{
+					globaleConfig: config
+				})
+			}
+		})
+	}else{
+
+	}
+	
 	
 })
 
-// post
+// globalcofig post
+app.post('/global/new', function(req, res){
+	var id = req.body.globaleConfig._id
+	var configObj = req.body.globaleConfig
+	var _config
+
+	if(id !== 'undefined' && configObj.domainName !== 'undefined'){//记录已存在
+		Copyright.findById(id, function(err, config){
+			if(err){
+				console.log(err)
+			}
+
+			_config = _.extend(config, configObj)
+			_config.save(function(err, config){
+				if(err){
+					console.log(err)
+				}
+				// 保存成功后重定向到首页
+				res.redirect('/')
+			})
+		})
+	}else{
+		_config = new Copyright({
+			domainName: configObj.domainName,
+			logo: {
+				href: configObj.logo.href,
+				blackSrc: configObj.logo.blackSrc,
+				whiteSrc: configObj.logo.whiteSrc
+			},
+			nav: {
+				txt: configObj.nav.txt,
+				href: configObj.nav.href
+			},
+			company: configObj.company,
+			reportCenter: {
+				txt: configObj.reportCenter.txt,
+				href: configObj.reportCenter.href
+			},
+			guardianship: {
+				txt: configObj.guardianship.txt,
+				href: configObj.guardianship.href
+			},
+			tempCopyrightHtml: configObj.tempCopyrightHtml,
+			agePermision: configObj.agePermision,
+			suggestion: configObj.suggestion,
+			reportInfoHtml: configObj.reportInfoHtml,
+			record: {
+				txt: configObj.record.txt,
+				href: configObj.record.href
+			},
+			otherHtml: configObj.otherHtml
+		})
+
+		_config.save(function(err, config){
+			if(err){
+				console.log(err)
+			}
+			// 保存成功后重定向到首页
+			res.redirect('/')
+		})
+	}
+})
+
+//delete
+app.delete('/', function(req, res){
+	var id = req.query.id
+	
+	if(id){
+		Copyright.remove({_id: id},function(err, config){
+			if(err){
+				console.log(err)
+			}else{
+				res.json({success: 1})
+			}
+		})
+	}
+})
+
+// get
 app.get('/getCopyright', function(req, res){
 	var config = req.query,
 		domainName = config.domainName,
@@ -138,7 +258,7 @@ app.get('/getCopyright', function(req, res){
 				    }
 				],
 				"company": "网易公司版权所有", //公司
-				"time": "1997-2016",//时间（待定，可以用js获取当前年份）
+				// "time": "1997-2016",//时间（待定，可以用js获取当前年份）
 				"reportCenter":{
 				    "txt":"中国网络游戏版权保护联盟举报中心",
 				    "href":"http://www.cogcpa.org"

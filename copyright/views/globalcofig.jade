@@ -2,61 +2,78 @@ doctype
 html
 	head
 		meta(charset='utf-8')
-		title #{title}
+		if globaleConfig && globaleConfig.domainName
+			title 修改#{globaleConfig.domainName}配置
+		else
+			title 添加新配置
 		link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet")
 		link(href="/css/index.css" rel="stylesheet")
 	body
 		.main
-			h3 #{title}
+			if globaleConfig && globaleConfig.domainName
+				h3 修改#{globaleConfig.domainName}配置
+			else
+				h3 添加新配置
 			.container
 				.row
-					.form-horizontal(id="Jcropform")
+					form.form-horizontal(method="post", action="/global/new")
+						input(type="hidden", name="globaleConfig[_id]", value="#{globaleConfig._id}")
+						input(type="hidden", name="globaleConfig[domainName]", value="#{globaleConfig.domainName}")
 						.form-group
-							label.col-sm-2.control-label(for="logo") Logo: 
+							label.col-sm-2.control-label Logo: 
 							.col-sm-10
-								input#logo.form-control(type="text", name="config[logo]")
+								input.form-control(type="text", name="globaleConfig[logo][href]", value="#{globaleConfig.logo.href}", placeholder="链接地址")
+								input.form-control(type="text", name="globaleConfig[logo][blackSrc]", value="#{globaleConfig.logo.blackSrc}", placeholder="深色图片地址")
+								input.form-control(type="text", name="globaleConfig[logo][whiteSrc]", value="#{globaleConfig.logo.whiteSrc}", placeholder="浅色图片地址")
 						.form-group
-							label.col-sm-2.control-label(for="nav") 导航: 
+							label.col-sm-2.control-label 导航: 
 							.col-sm-10
-								input#nav.form-control(type="text", name="config[nav]")
+								input.form-control(type="text", name="globaleConfig[nav][txt]", placeholder="显示文案", value="#{globaleConfig.nav.txt}")
+								input.form-control(type="text", name="globaleConfig[nav][href]", placeholder="链接地址", value="#{globaleConfig.nav.href}")
 						.form-group
 							label.col-sm-2.control-label(for="company") 公司: 
 							.col-sm-10
-								input#company.form-control(type="text", name="config[company]", placeholder="")
+								input#company.form-control(type="text", name="globaleConfig[company]", placeholder="", value="#{globaleConfig.company}")
 						.form-group
-							label.col-sm-2.control-label(for="reportCenter") 举报中心: 
+							label.col-sm-2.control-label 举报中心: 
 							.col-sm-10
-								input#reportCenter.form-control(type="text", name="config[reportCenter]", placeholder="")
+								input.form-control(type="text", name="globaleConfig[reportCenter][txt]", placeholder="显示文案", value="#{globaleConfig.reportCenter.txt}")
+								input.form-control(type="text", name="globaleConfig[reportCenter][href]", placeholder="链接地址", value="#{globaleConfig.reportCenter.href}")
 						.form-group
-							label.col-sm-2.control-label(for="guardianship") 家长监护： 
+							label.col-sm-2.control-label 家长监护： 
 							.col-sm-10
-								input#guardianship.form-control(type="text", name="config[guardianship]", placeholder="")
+								input.form-control(type="text", name="globaleConfig[guardianship][txt]", placeholder="显示文案", value="#{globaleConfig.guardianship.txt}")
+								input.form-control(type="text", name="globaleConfig[guardianship][href]", placeholder="链接地址", value="#{globaleConfig.guardianship.href}")
 						.form-group
 							label.col-sm-2.control-label(for="tempCopyrightHtml") tempCopyrightHtml： 
 							.col-sm-10
-								input#tempCopyrightHtml.form-control(type="text", name="config[tempCopyrightHtml]", placeholder="")
+								textarea#tempCopyrightHtml.form-control(type="text", name="globaleConfig[tempCopyrightHtml]", placeholder="") #{globaleConfig.tempCopyrightHtml}
 						.form-group
 							label.col-sm-2.control-label(for="agePermision") 适合年龄： 
 							.col-sm-10
-								input#agePermision.form-control(type="text", name="config[agePermision]", placeholder="")
+								input#agePermision.form-control(type="text", name="globaleConfig[agePermision]", placeholder="", value="#{globaleConfig.agePermision}")
 						.form-group
 							label.col-sm-2.control-label(for="suggestion") 建议： 
 							.col-sm-10
-								input#suggestion.form-control(type="text", name="config[suggestion]", placeholder="")
+								textarea#suggestion.form-control(type="text", name="globaleConfig[suggestion]", placeholder="") #{globaleConfig.suggestion}
 						.form-group
 							label.col-sm-2.control-label(for="reportInfoHtml") reportInfoHtml： 
 							.col-sm-10
-								input#reportInfoHtml.form-control(type="text", name="config[reportInfoHtml]", placeholder="")
+								textarea#reportInfoHtml.form-control(type="text", name="globaleConfig[reportInfoHtml]", placeholder="") #{globaleConfig.reportInfoHtml}
 						.form-group
-							label.col-sm-2.control-label(for="record") 备案： 
+							label.col-sm-2.control-label 备案： 
 							.col-sm-10
-								input#record.form-control(type="text", name="config[record]", placeholder="")
+								input.form-control(type="text", name="globaleConfig[record][txt]", placeholder="显示文案", value="#{globaleConfig.record.txt}")
+								input.form-control(type="text", name="globaleConfig[record][href]", placeholder="链接地址", value="#{globaleConfig.record.href}")
 						.form-group
 							label.col-sm-2.control-label(for="otherHtml") 其它： 
 							.col-sm-10
-								input#otherHtml.form-control(type="text", name="config[otherHtml]", placeholder="")
+								textarea#otherHtml.form-control(type="text", name="globaleConfig[otherHtml]", placeholder="") #{globaleConfig.otherHtml}
 						.form-group
-							input.btn.btn-primary.btn-lg.center-block(type="submit" value="添加")
+							if(globaleConfig.domainName)
+								input.btn.btn-primary.btn-lg.center-block(type="submit" value="修改")
+							else
+								input.btn.btn-primary.btn-lg.center-block(type="submit" value="添加")
 
 		
 		script(src="/libs/jquery/dist/jquery.min.js")

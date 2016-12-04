@@ -8,15 +8,41 @@ html
 	body
 		.main
 			h1 #{title}
-			h3 全局配置
-			.container
-				.row
-					
-
-			h3 局部配置
-			.container
-				.row#Jresult
-
+			div.container
+				button.btn.btn-primary.navbar-right(type="button" onclick="window.location.href='/global/add'") 添加新配置
+					span.glyphicon.glyphicon-plus
+			each item in configs
+				h3(class="item-id-#{item._id}") #{item.domainName}配置 
+					a(href="/global/eidt/#{item._id}") 修改
+					buttom.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
+				div(class="container item-id-#{item._id}")
+					.row
+						p logo: 
+							a(href="#{item.logo.href}" target="_blank") #{item.logo.href}
+							br
+							a(href="#{item.logo.blackSrc}" target="_blank")
+								img(src="#{item.logo.blackSrc}")
+							br
+							a(href="#{item.logo.whiteSrc}" target="_blank")
+								img(src="#{item.logo.whiteSrc}")
+						p nav: #{item.nav.txt}
+							br
+							a(href="#{item.nav.href}" target="_blank") #{item.nav.href}
+						p company: #{item.company}
+						p reportCenter: #{item.reportCenter.txt}
+							br
+							a(href="#{item.reportCenter.href}" target="_blank") #{item.reportCenter.href}
+						p guardianship: #{item.guardianship.txt}
+							br
+							a(href="#{item.guardianship.href}" target="_blank") #{item.guardianship.href}
+						p tempCopyrightHtml: #{item.tempCopyrightHtml}
+						p agePermision: #{item.agePermision}
+						p suggestion: #{item.suggestion}
+						p reportInfoHtml: #{item.reportInfoHtml}
+						p record: #{item.record.txt}
+							br
+							a(href="#{item.record.href}" target="_blank") #{item.record.href}
+						p otherHtml: #{item.otherHtml}
 		
 		script(src="/libs/jquery/dist/jquery.min.js")
 		script(src="/libs/bootstrap/dist/js/bootstrap.min.js")
