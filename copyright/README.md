@@ -24,22 +24,47 @@ mongod --config "C:\Program Files\MongoDB 2.6 Standard\bin\mongo.config" --insta
 net start mongodb
 ```
 
-+ 数据库操作
-新建数据库：第一步：use 新建数据库名；第二步：进行此库相关的操作；如果不进行第二步，该数据库不会被创建
+## 数据库操作
+
++ 新建数据库
+
+第一步：use 新建数据库名；
+
+第二步：进行此库相关的操作；如果不进行第二步，该数据库不会被创建
 
 进入mongodb命令操作：mongo
 
-查看数据库：show dbs;
++ 查看数据库
 
-新建表：db.createCollection('要新建的表名');
+```
+show dbs;
+```
 
-查看当前数据库下表： show collections;
++ 新建表
 
-删除当前数据库指定表：db.表名.drop();
+```
+db.createCollection('要新建的表名');
+```
 
-删除当前数据库：db.dropDatabase();
++ 查看当前数据库下表
 
-导出数据库：
+```
+show collections;
+```
+
++ 删除当前数据库指定表
+
+```
+db.表名.drop();
+```
+
++ 删除当前数据库
+
+```
+db.dropDatabase();
+```
+
++ 导出数据库
 
 ```
 没有制定数据库时，备份所有数据
@@ -48,7 +73,7 @@ mongodump -h IP --port 端口 -u 用户名 -p 密码 -d 数据库 -o 保存文�
 mongodump -d 数据库 -o 保存文件夹
 ```
 
-导入数据库：
++ 导入数据库
 
 ```
 文件前边有--drop时候表示先删除原来同名的数据库
@@ -56,6 +81,7 @@ mongorestore -h IP --port 端口 -u 用户名 -p 密码 -d 数据库 --drop 文�
 ```
 
 + 备份表
+
 导出
 
 ```
@@ -72,4 +98,4 @@ mongoimport -h IP --port 端口 -u 用户名 -p 密码 -d 数据库 -c 表名 [-
 --upsert （默认）插入备份文件中的数据（不会删除原来的数据）
 ```
 
-+ 应用部署
+## 应用部署
