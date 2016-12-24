@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>云同步</title>
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="address=no" />
+<!--for baidu 识别移动端页面并禁止百度转码-->
+<meta name="applicable-device"content="mobile"> 
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--viewport 设置，如果页面实际情况不允许缩放请加上,user-scalable=no-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style>
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0}
+input{padding:0;border-radius:0;}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;vertical-align:baseline;outline:none;appearance:none;-webkit-appearance:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}
+li{list-style:none;}
+a{text-decoration:none;color:#000}
+p,a,li,span,input{font-size:14px; }
+img{vertical-align:top;width:100%}
+.hide{display:none;}
+body,html{background:#f9f9f9;text-align: left;width: 100%;font-family: "Microsoft YaHei","Helvetica Neue",Arial, HelveticaNeue, "Helvetica-Neue", Helvetica, "BBAlpha Sans", sans-serif;font-weight: normal;font-size: 14px;}
+*{
+    -webkit-tap-highlight-color:rgba(14,159,111,0);
+    -webkit-touch-callout:none;
+}
+.main{width: 100%;	padding: 15px;	box-sizing:border-box;	max-width: 414px;	margin: 0 auto;}
+.input textarea{width: 100%;border:0;padding: 10px;	box-sizing:border-box;	line-height: 20px;
+	-ms-word-break: break-all;	word-break: break-all;}
+.submit{width: 100%;height: 50px;line-height: 50px;	display: block;	background: #f60;	color: #fff;	text-align: center;	margin-top: 15px;margin-bottom: 20px;font-size: 16px;}
+.submit:hover{background: #f80;}
+.list{min-height: 100%;}
+.list a{display: block;	line-height: 24px;border-bottom: 1px solid #fff;-ms-word-break: break-all;	word-break: break-all;padding: 10px 5px;position: relative;	z-index: 1;}
+.list a span{position: absolute;z-index: 2;	width: 18px;height: 18px;border-radius: 18px;
+	background: #fff;color: #fff;right: 0;top: 50%;	margin-top: -9px;display: none;}
+.list a span i{position: absolute;width: 10px;height: 1px;background: #f60;	top: 50%;left: 50%;	margin-left: -5px;}
+.list a span .i1{
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.list a span .i2{
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+.list a:visited{color: #999;}
+.list a:hover{color: #f60;}
+.list a:hover span{	display: block;}
+.copy{text-align: center;	line-height: 40px;	padding-top: 30px;	color: #ddd;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ewm"></div>
+	<div class="input">
+		<textarea name="link" id="Jlink" rows="4" placeholder="请输入链接"></textarea>
+		<a href="javascript:;" class="submit" id="Jsubmit">提交</a>
+	</div>
+	<div class="list" id="Jlist">
+		数据加载中...
+	</div>
+	<div class="copy">
+		Powerby 小军
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+var $list = $('#Jlist'),
+	$submit = $('#Jsubmit'),
+	$link = $('#Jlink'),
+	_host = 'http://127.0.0.1:3000',
+	_submiting = false,
+	get_data = function(url,data,cb,err){
+        $.ajax({
+            type: 'get',
+            url: _host+url,
+            dataType: 'jsonp',
+            data:data,
+            success: cb,
+            error:err
+        });
+    },
+	getLinks = function(){
+		get_data(
+			'/cloudlinks',
+			{},
+			function(results){
+				if(results.success){
+					var links = results.links,
+						html = '';
+					for (var len = links.length, i =0; i < len; i++) {
+						html += '<a href="'+links[i].link+'" target="_blank">'+links[i].link+'<span data-id="'+links[i]._id+'"><i class="i1"></i><i class="i2"></i></span></a>';
+					};
+					setTimeout(function(){
+						$list.html(html);
+					},200)
+					
+				}else{
+					$list.html('获取数据出错~');
+				}
+			},
+			function(){
+				$list.html('获取数据出错~');
+			}
+		)
+	},
+	deleteLink = function(id, ele){
+		get_data(
+		'/deletelink',
+		{
+			id: id
+		},
+		function(results){
+			if(results.success){
+				ele.remove();
+			}else{
+				alert('删除失败~');
+			}
+			_submiting = false;
+		},
+		function(){
+			alert('网络错误，请稍后再试~');
+			_submiting = false;
+		})
+	},
+	bindEvent = function(){
+		$submit.on('click', function(){
+			if(_submiting){
+				return;
+			}
+
+			var $this = $(this),
+				v = $link.val().replace(/(^\s*)|(\s*$)/g,'');
+			if(v){
+				_submiting = true;
+				get_data(
+				'/addnewlink',
+				{
+					link: v
+				},
+				function(results){
+					if(results.success){
+						getLinks();
+						$link.val('');
+					}else{
+						$list.html('提交失败~');
+					}
+					_submiting = false;
+				},
+				function(){
+					$list.html('网络错误，请稍后再试~');
+					_submiting = false;
+				})
+			}else{
+				alert('请输入内容！');
+				$link.focus();
+			}
+
+		})
+		$list.on('click', 'span[data-id]', function(){
+			var $this = $(this),
+				id = $this.data('id');
+			if(id){
+				_submiting = true;
+				deleteLink(id, $this.parent());
+			}
+			return false;
+		})
+	},
+	init = function(){
+		bindEvent();
+		getLinks();
+	};
+init();
+</script>
+</body>
+</html>
+		
