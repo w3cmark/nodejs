@@ -1,8 +1,22 @@
 # copyright
 
+## 初始化项目
+
+1- 安装静态资源(bower.json)
+
+```
+bower install
+```
+
+2- 安装依赖模块(package.json)
+
+```
+npm install
+```
+
 ## mongodb
 
-+ 配置config文件
++ 新建mongo.config文件
 
 ```
 ##数据库目录
@@ -26,6 +40,11 @@ net start mongodb
 
 ## 数据库操作
 
++ 进入mongo命令
+
+```
+mongo
+```
 + 新建数据库
 
 第一步：use 新建数据库名；
