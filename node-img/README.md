@@ -1,10 +1,5 @@
 # 基于node.js的图片批量裁剪工具
 
-[![Latest NPM release][npm-badge]][npm-badge-url]
-[![License][license-badge]][license-badge-url]
-[![Dependencies][dependencies-badge]][dependencies-badge-url]
-[![Dev Dependencies][devDependencies-badge]][devDependencies-badge-url]
-
 ## 界面
 
 ![此处输入图片的描述][1]
