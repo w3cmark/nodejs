@@ -7,3 +7,5 @@
 + [基于node.js的图片批量裁剪工具](https://github.com/w3cmark/nodejs/tree/master/node-img)
 
 + [博客站点栗子](https://github.com/w3cmark/nodejs/tree/master/node_blog)
+
++ [Cloud Link（云链接）](https://github.com/w3cmark/nodejs/tree/master/cloudlink)
